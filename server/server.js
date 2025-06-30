@@ -1,23 +1,26 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const apiRouter = require('./routes/api');
 
-const githubRoutes = require('./routes/github');
-
+// Initialize Express app
 const app = express();
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
+// Middleware
+app.use(helmet()); // Security middleware
+app.use(cors()); // Enable CORS
+app.use(express.json()); // Parse JSON bodies
 
-// Use GitHub routes
-app.use('/api/github', githubRoutes);
+// API routes
+app.use('/api', apiRouter);
 
-// 404 handler for unknown routes
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
