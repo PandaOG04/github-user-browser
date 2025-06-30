@@ -44,9 +44,4 @@ This project is a full-stack web application that allows users to search GitHub 
 - Backend handles all GitHub API interactions.
 - The project folder structure separates backend and frontend clearly.
 
----
-
-## Author
-
-Your Name Here
 
